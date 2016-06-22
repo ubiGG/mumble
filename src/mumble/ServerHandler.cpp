@@ -381,7 +381,7 @@ void ServerHandler::setSslErrors(const QList<QSslError> &errors) {
 #endif
 
 	bStrong = false;
-	if ((qscCert.size() > 0)  && (QString::fromLatin1(qscCert.at(0).digest(QCryptographicHash::Sha1).toHex()) == Database::getDigest(qsHostName, usPort)))
+	if ((qscCert.size() > 0)  && (QString::fromLatin1(qscCert.at(0).digest(QCryptographicHash::Sha3_512).toHex()) == Database::getDigest(qsHostName, usPort)))
 		connection->proceedAnyway();
 	else
 		qlErrors = newErrors;
@@ -542,7 +542,7 @@ void ServerHandler::serverConnectionConnected() {
 
 	if (! qscCert.isEmpty()) {
 		const QSslCertificate &qsc = qscCert.last();
-		qbaDigest = sha1(qsc.publicKey().toDer());
+		qbaDigest = dgst(qsc.publicKey().toDer());
 		bUdp = Database::getUdp(qbaDigest);
 	} else {
 		// Shouldn't reach this
@@ -783,7 +783,7 @@ void ServerHandler::setUserTexture(unsigned int uiSession, const QByteArray &qba
 	sendMessage(mpus);
 
 	if (! texture.isEmpty()) {
-		Database::setBlob(sha1(texture), texture);
+		Database::setBlob(dgst(texture), texture);
 	}
 }
 

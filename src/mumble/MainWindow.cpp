@@ -1111,7 +1111,7 @@ void MainWindow::on_qaSelfComment_triggered() {
 		g.sh->sendMessage(mpus);
 
 		if (! msg.isEmpty())
-			Database::setBlob(sha1(msg), msg.toUtf8());
+			Database::setBlob(dgst(msg), msg.toUtf8());
 	}
 	delete texm;
 }
@@ -2825,7 +2825,7 @@ void MainWindow::serverDisconnected(QAbstractSocket::SocketError err, QString re
 					vc.exec();
 					continue;
 				} else if (res == QMessageBox::Yes) {
-					Database::setDigest(host, port, QString::fromLatin1(c.digest(QCryptographicHash::Sha1).toHex()));
+					Database::setDigest(host, port, QString::fromLatin1(c.digest(QCryptographicHash::Sha3_512).toHex()));
 					qaServerDisconnect->setEnabled(true);
 					on_Reconnect_timeout();
 				}

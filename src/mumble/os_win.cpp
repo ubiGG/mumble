@@ -251,7 +251,7 @@ void os_init() {
 	} else {
 		QByteArray a = f.readAll();
 		if (a.size() > 0) {
-			QCryptographicHash qch(QCryptographicHash::Sha1);
+			QCryptographicHash qch(QCryptographicHash::Sha3_512);
 			qch.addData(a);
 			hash = QLatin1String(qch.result().toHex());
 		}

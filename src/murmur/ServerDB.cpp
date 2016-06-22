@@ -1172,7 +1172,7 @@ void ServerDB::disableSU(int srvnum) {
 }
 
 QString ServerDB::getLegacySHA1Hash(const QString &password) {
-	QByteArray hash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha1);
+	QByteArray hash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_512);
 	return QString::fromLatin1(hash.toHex());
 }
 

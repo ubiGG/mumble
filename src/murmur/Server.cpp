@@ -1260,7 +1260,7 @@ void Server::encrypted() {
 #else
 		uSource->qslEmail = cert.alternateSubjectNames().values(QSsl::EmailEntry);
 #endif
-		uSource->qsHash = cert.digest(QCryptographicHash::Sha1).toHex();
+		uSource->qsHash = cert.digest(QCryptographicHash::Sha3_512).toHex();
 		if (! uSource->qslEmail.isEmpty() && uSource->bVerified) {
 #if QT_VERSION >= 0x050000
 			QString subject;
@@ -1777,7 +1777,7 @@ QString Server::addressToString(const QHostAddress &adr, unsigned short port) {
 	HostAddress ha(adr);
 
 	if ((Meta::mp.iObfuscate != 0)) {
-		QCryptographicHash h(QCryptographicHash::Sha1);
+		QCryptographicHash h(QCryptographicHash::Sha3_512);
 		h.addData(reinterpret_cast<const char *>(&Meta::mp.iObfuscate), sizeof(Meta::mp.iObfuscate));
 		if (adr.protocol() == QAbstractSocket::IPv4Protocol) {
 			quint32 num = adr.toIPv4Address();
@@ -1886,7 +1886,7 @@ void Server::recheckCodecVersions(ServerUser *connectingUser) {
 void Server::hashAssign(QString &dest, QByteArray &hash, const QString &src) {
 	dest = src;
 	if (src.length() >= 128)
-		hash = sha1(src);
+		hash = dgst(src);
 	else
 		hash = QByteArray();
 }
@@ -1894,7 +1894,7 @@ void Server::hashAssign(QString &dest, QByteArray &hash, const QString &src) {
 void Server::hashAssign(QByteArray &dest, QByteArray &hash, const QByteArray &src) {
 	dest = src;
 	if (src.length() >= 128)
-		hash = sha1(src);
+		hash = dgst(src);
 	else
 		hash = QByteArray();
 }

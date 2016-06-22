@@ -552,7 +552,7 @@ void Plugins::fetchedUpdatePAPlugins(QByteArray data, QUrl) {
 					rescan=true;
 				}
 			} else if (f.open(QIODevice::ReadOnly)) {
-				QString h = QLatin1String(sha1(f.readAll()).toHex());
+				QString h = QLatin1String(dgst(f.readAll()).toHex());
 				f.close();
 				if (h == wanthash) {
 					if (qd != qdu) {
@@ -587,7 +587,7 @@ void Plugins::fetchedUpdatePAPlugins(QByteArray data, QUrl) {
 						rescan=true;
 					}
 				} else if (f.open(QIODevice::ReadOnly)) {
-					QString h = QLatin1String(sha1(f.readAll()).toHex());
+					QString h = QLatin1String(dgst(f.readAll()).toHex());
 					f.close();
 					if (h == wanthash) {
 						qmPluginFetchMeta.remove(filename);
@@ -625,7 +625,7 @@ void Plugins::fetchedPAPluginDL(QByteArray data, QUrl url) {
 	QString fname = QFileInfo(urlPath).fileName();
 	if (qmPluginFetchMeta.contains(fname)) {
 		PluginFetchMeta pfm = qmPluginFetchMeta.value(fname);
-		if (pfm.hash == QLatin1String(sha1(data).toHex())) {
+		if (pfm.hash == QLatin1String(dgst(data).toHex())) {
 			bool verified = true;
 #ifdef Q_OS_WIN
 			verified = false;

@@ -75,7 +75,7 @@ void ViewCert::on_Chain_currentRowChanged(int idx) {
 	l << tr("Valid to: %1").arg(c.expiryDate().toString());
 	l << tr("Serial: %1").arg(QString::fromLatin1(c.serialNumber().toHex()));
 	l << tr("Public Key: %1 bits %2").arg(c.publicKey().length()).arg((c.publicKey().algorithm() == QSsl::Rsa) ? tr("RSA") : tr("DSA"));
-	l << tr("Digest (SHA-1): %1").arg(QString::fromLatin1(c.digest(QCryptographicHash::Sha1).toHex()));
+	l << tr("Digest (SHA-1): %1").arg(QString::fromLatin1(c.digest(QCryptographicHash::Sha3_512).toHex()));
 
 #if QT_VERSION >= 0x050000
 	const QMultiMap<QSsl::AlternativeNameEntryType, QString> &alts = c.subjectAlternativeNames();

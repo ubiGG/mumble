@@ -171,9 +171,9 @@ QString ModelItem::hash() const {
 		if (! pUser->qsHash.isEmpty())
 			return pUser->qsHash;
 		else
-			return QLatin1String(sha1(pUser->qsName).toHex());
+			return QLatin1String(dgst(pUser->qsName).toHex());
 	} else {
-		QCryptographicHash chash(QCryptographicHash::Sha1);
+		QCryptographicHash chash(QCryptographicHash::Sha3_512);
 
 		chash.addData(cChan->qsName.toUtf8());
 		chash.addData(QString::number(cChan->iId).toUtf8());
@@ -951,7 +951,7 @@ void UserModel::setFriendName(ClientUser *p, const QString &name) {
 }
 
 void UserModel::setComment(ClientUser *cu, const QString &comment) {
-	cu->qbaCommentHash = comment.isEmpty() ? QByteArray() : sha1(comment);
+	cu->qbaCommentHash = comment.isEmpty() ? QByteArray() : dgst(comment);
 
 	if (comment != cu->qsComment) {
 		ModelItem *item = ModelItem::c_qhUsers.value(cu);
@@ -1014,7 +1014,7 @@ void UserModel::setCommentHash(ClientUser *cu, const QByteArray &hash) {
 }
 
 void UserModel::setComment(Channel *c, const QString &comment) {
-	c->qbaDescHash = comment.isEmpty() ? QByteArray() : sha1(comment);
+	c->qbaDescHash = comment.isEmpty() ? QByteArray() : dgst(comment);
 
 	if (comment != c->qsDesc) {
 		ModelItem *item = ModelItem::c_qhChannels.value(c);

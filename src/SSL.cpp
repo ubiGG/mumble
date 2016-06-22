@@ -258,7 +258,7 @@ void MumbleSSL::addSystemCA() {
 	QSet<QByteArray> digests;
 	QList<QSslCertificate> ql;
 	foreach(const QSslCertificate &crt, QSslSocket::defaultCaCertificates()) {
-		QByteArray digest = crt.digest(QCryptographicHash::Sha1);
+		QByteArray digest = crt.digest(QCryptographicHash::Sha3_512);
 		if (! digests.contains(digest) && crt.isValid()) {
 			ql << crt;
 			digests.insert(digest);

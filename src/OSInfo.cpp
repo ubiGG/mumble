@@ -32,7 +32,7 @@ QString OSInfo::getMacHash(const QList<QHostAddress> &qlBind) {
 		if (qni.hardwareAddress().isEmpty())
 			continue;
 
-		QString hash = QString::fromUtf8(QCryptographicHash::hash(qni.hardwareAddress().toUtf8(), QCryptographicHash::Sha1).toHex());
+		QString hash = QString::fromUtf8(QCryptographicHash::hash(qni.hardwareAddress().toUtf8(), QCryptographicHash::Sha3_512).toHex());
 
 		if (third.isEmpty() || third > hash)
 			third = hash;

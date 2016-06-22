@@ -75,12 +75,12 @@ inline ::std::string blob(const QByteArray &str) {
 	return ::std::string(str.constData(), str.length());
 }
 
-inline QByteArray sha1(const QByteArray &blob) {
-	return QCryptographicHash::hash(blob, QCryptographicHash::Sha1);
+inline QByteArray dgst(const QByteArray &blob) {
+	return QCryptographicHash::hash(blob, QCryptographicHash::Sha3_512);
 }
 
-inline QByteArray sha1(const QString &str) {
-	return QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha1);
+inline QByteArray dgst(const QString &str) {
+	return QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha3_512);
 }
 
 #endif
